@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Search from '../models/search.model'; // Importar el modelo
+import Search from '../models/search.model';
 import axios from 'axios';
 
 // Buscar en GitHub
@@ -12,7 +12,7 @@ export const searchReposAndUsers = async (req, res) => {
         const repos = reposResponse.data.items;
         const users = usersResponse.data.items;
 
-        const search =  new Search({
+        const search = new Search({
             term: keyword,
             timestamp: new Date()
         });
