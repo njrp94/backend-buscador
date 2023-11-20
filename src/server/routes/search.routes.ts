@@ -6,12 +6,13 @@ import {
     deleteSearchById
     
 } from "../../controllers/search.controller";
+import generateToken from '../../middlewares/token.middleware';
 
 const router = Router();
 
-router.get('/search', searchReposAndUsers);
-router.get('/search/history', getSearchHistory);
-router.delete('/search', deleteHistory);
-router.delete('/search/:id', deleteSearchById);
+router.post('/search', generateToken, searchReposAndUsers);
+router.get('/search/history', generateToken, getSearchHistory);
+router.delete('/search', generateToken, deleteHistory);
+router.delete('/search/:id', generateToken, deleteSearchById);
 
 export default router;

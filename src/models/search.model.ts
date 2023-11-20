@@ -1,6 +1,13 @@
-import { model } from 'mongoose';
-import searchSchema from '../schemas/search.schema';
+import { model, Document } from 'mongoose';
+import SearchSchema from '../schemas/search.schema';
 
-const Search = model('Search', searchSchema);
+export interface SearchDocument extends Document {
+  term: string;
+  timestamp: Date;
+  results: string;
+  sessionId: string;
+}
+
+const Search = model<SearchDocument>('Search', SearchSchema);
 
 export default Search;

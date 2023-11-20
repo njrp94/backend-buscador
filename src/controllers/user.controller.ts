@@ -15,6 +15,9 @@ export const getUserDetails = async (req: Request, res: Response) => {
         last_updated: repo.updated_at,
         }));
 
+    const token = res.locals.token;
+
+
     const userDetail = new UserDetail({
       login: userData.login,
       bio: userData.bio,
@@ -24,7 +27,7 @@ export const getUserDetails = async (req: Request, res: Response) => {
     });
 
     await userDetail.save();
-    res.json({ userData, reposData });
+    res.json({ userData, reposData, token });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
