@@ -3,7 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 import * as jwt from 'jsonwebtoken';
 
 const generateToken = (req: Request, res: Response, next: NextFunction) => {
-    res.locals.token = global.serverToken;
+    const sessionId = uuidv4();
+    const token = jwt.sign({ sessionId }, 'secretToken', { expiresIn: '4h' });
+
+    res.locals.token = token;
 
     next();
 };

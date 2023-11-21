@@ -4,7 +4,7 @@ import SearchSchema from '../schemas/search.schema';
 export interface SearchDocument extends Document {
   term: string;
   timestamp: Date;
-  results: string;
+  results: object;
   sessionId: string;
 }
 

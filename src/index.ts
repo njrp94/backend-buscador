@@ -4,10 +4,9 @@ import dotenv from "dotenv";
 import app from "./server";
 
 dotenv.config({ path: ".env" });
-const port = process.env.PORT || 3000;
+const port = process.env.PORT
 const connectionString = process.env.DB_CONNECTION;
 
-// Conexión a la base de datos
 mongoose
   .connect(connectionString)
   .then(() => {
