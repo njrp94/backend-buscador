@@ -1,14 +1,22 @@
 import { NextFunction, Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
 import * as jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
 
 const generateToken = (req: Request, res: Response, next: NextFunction) => {
+  if (!global.serverToken) {
     const sessionId = uuidv4();
     const token = jwt.sign({ sessionId }, 'secretToken', { expiresIn: '4h' });
+    global.serverToken = token;
+  }
 
-    res.locals.token = token;
+  const sessionId = jwt.verify(global.serverToken, 'secretToken').sessionId;
 
-    next();
+  res.locals.token = {
+    sessionId,
+    jwt: global.serverToken,
+  };
+
+  next();
 };
 
 export default generateToken;

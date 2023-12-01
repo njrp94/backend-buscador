@@ -27,6 +27,7 @@ export const getUserDetails = async (req: Request, res: Response) => {
     });
 
     await userDetail.save();
+    
     res.json({ userData, reposData, token });
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -4,7 +4,6 @@ import axios from 'axios';
 import * as jwt from 'jsonwebtoken';
 
 
-// Buscar en GitHub
 export const searchReposAndUsers = async (req, res) => {
     const { keyword } = req.body;
 
@@ -14,19 +13,19 @@ export const searchReposAndUsers = async (req, res) => {
 
         const repos = reposResponse.data.items;
         const users = usersResponse.data.items;
-        const token = res.locals.token;
+        const { sessionId, jwt } = res.locals.token;
 
         const search = new Search({
             term: keyword,
             timestamp: new Date(),
-            sessionId: token.sessionId,
+            sessionId: sessionId,
             results: { repos, users },
         });
 
         await search.save();
 
-        res.json({ repos, users });
-        
+        res.json({repos, users });
+
       } catch (error) {
         res.status(500).json({ message: error.message });
       }
@@ -34,21 +33,21 @@ export const searchReposAndUsers = async (req, res) => {
 
 // acceder al historial de busqueda
 export const getSearchHistory = async (req, res) => {
+  try {
+    const { sessionId } = res.locals.token;
+    const searchHistory = await Search.find({ sessionId }, 'term timestamp results').sort({ timestamp: -1 });
 
-    try {
-        const token = res.locals.token;
-        const searchHistory = await Search.find({ sessionId: token.sessionId }, 'term timestamp results').sort({ timestamp: -1 });
+    if (searchHistory.length === 0) {
+      return res.status(404).json({ message: 'No hay búsquedas en tu historial' });
+    }
 
-        if (searchHistory.length === 0) {
-            return res.status(404).json({ message: 'No hay busquedas en tu historial'});
-        }
-        
-        res.json(searchHistory);
+    res.json(searchHistory);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-        }
-    };
+
     
  // editar busqueda especifica
  export const editSearch = async (req: Request, res: Response) => {
