@@ -16,7 +16,7 @@ const corsOptions = {
 };
 
 const sessionId = uuidv4();
-const serverToken = jwt.sign({ sessionId }, 'secretToken', { expiresIn: '4h' });
+const serverToken = jwt.sign({ sessionId }, 'secretToken', { expiresIn: '24h' });
 
 global.serverToken = serverToken;
 
