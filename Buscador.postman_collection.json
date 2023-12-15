@@ -29,7 +29,7 @@
 					"urlencoded": [
 						{
 							"key": "keyword",
-							"value": "prueba2",
+							"value": "react2",
 							"type": "text"
 						}
 					]
@@ -97,7 +97,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "655d35b014d18489a85f5baf"
+							"value": "657ba5b2dacc388c914115f5"
 						}
 					]
 				}
@@ -107,8 +107,18 @@
 		{
 			"name": "Detalles de usuario",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer Token",
+						"type": "text",
+						"disabled": true
+					}
+				],
 				"url": {
 					"raw": "http://localhost:3000/api/v1/user/:username/",
 					"protocol": "http",
@@ -126,7 +136,39 @@
 					"variable": [
 						{
 							"key": "username",
-							"value": "juanch04"
+							"value": "njrp94"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Busqueda especifica",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/search/history/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"search",
+						"history",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "657ba8d5ecd45e1bd5fcfa5f"
 						}
 					]
 				}
