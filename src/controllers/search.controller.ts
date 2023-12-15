@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Search from '../models/search.model';
 import axios from 'axios';
 import * as jwt from 'jsonwebtoken';
+import { ObjectId } from 'mongoose';
 
 
 export const searchReposAndUsers = async (req, res) => {
@@ -47,6 +48,21 @@ export const getSearchHistory = async (req, res) => {
   }
 };
 
+//acceder a los resultados de una busqueda especifica
+export const getSearchResultById = async (req, res) => {
+  try {
+    const searchId = req.params.id;
+    const searchResult = await Search.findById(searchId);
+
+    if (!searchResult) {
+      return res.status(404).json({ message: 'No se encontró la búsqueda con el ID proporcionado' });
+    }
+
+    res.json(searchResult.results);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
     
  // editar busqueda especifica
